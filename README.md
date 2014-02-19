@@ -1,0 +1,2 @@
+Gamajo_Registerable
+===================
