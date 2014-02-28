@@ -16,8 +16,22 @@
  * @author  Gary Jones
  */
 class Meal_Planner_Taxonomy_Recipe_Type extends Gamajo_Taxonomy {
+	/**
+	 * Taxonomy ID.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type string
+	 */
 	protected $taxonomy = 'mp_recipe_type';
 
+	/**
+	 * Return taxonomy default arguments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array Taxonomy default arguments.
+	 */
 	protected function default_args() {
 		$labels = array(
 			'name'                       => __( 'Recipe Types', 'meal-planner' ),

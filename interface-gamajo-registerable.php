@@ -7,10 +7,11 @@
  * @link      http://gamajo.com/registerable
  * @copyright 2013 Gary Jones
  * @license   GPL-2.0+
+ * @version   1.0.0
  */
 
 /**
- * Register something like post types or taxonomy.
+ * Handle registration for something like a post type or taxonomy.
  *
  * @package Gamajo_Registerable
  * @author  Gary Jones

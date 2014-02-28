@@ -16,20 +16,39 @@
  * @author  Gary Jones
  */
 class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
+	/**
+	 * Post type ID.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type string
+	 */
 	protected $post_type = 'mp_recipe';
 
+
+	/**
+	 * Return post type default arguments.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array Post type default arguments.
+	 */
 	protected function default_args() {
 		$labels = array(
-			'name'               => __( 'Recipes', 'meal-planner' ),
-			'singular_name'      => __( 'Recipe', 'meal-planner' ),
-			'add_new'            => _x( 'Add New', 'recipe', 'meal-planner' ),
+			'name'               => _x( 'Recipes', 'post type general name', 'meal-planner' ),
+			'singular_name'      => _x( 'Recipe', 'post type singular name', 'meal-planner' ),
+			'menu_name'          => _x( 'Recipes', 'admin menu', 'meal-planner' ),
+			'name_admin_bar'     => _x( 'Recipe', 'add new on admin bar', 'meal-planner' ),
+			'add_new'            => _x( 'Add New', 'mp_recipe', 'meal-planner' ),
 			'add_new_item'       => __( 'Add New Recipe', 'meal-planner' ),
-			'edit_item'          => __( 'Edit Recipe', 'meal-planner' ),
 			'new_item'           => __( 'New Recipe', 'meal-planner' ),
+			'edit_item'          => __( 'Edit Recipe', 'meal-planner' ),
 			'view_item'          => __( 'View Recipe', 'meal-planner' ),
+			'all_items'          => __( 'All Recipes', 'meal-planner' ),
 			'search_items'       => __( 'Search Recipes', 'meal-planner' ),
-			'not_found'          => __( 'No recipes found', 'meal-planner' ),
-			'not_found_in_trash' => __( 'No recipes found in trash', 'meal-planner' ),
+			'parent_item_colon'  => __( 'Parent Recipes:', 'meal-planner' ),
+			'not_found'          => __( 'No recipes found.', 'meal-planner' ),
+			'not_found_in_trash' => __( 'No recipes found in Trash.', 'meal-planner' ),
 		);
 
 		$supports = array(
@@ -52,23 +71,51 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 		return $args;
 	}
 
+	/**
+	 * Return post type updated messages.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return array Post type updated messages.
+	 */
 	public function messages() {
-		global $post, $post_ID;
-		return array(
-			0 => '', // Unused. Messages start at index 1.
-			1 => sprintf( __( 'Recipe updated. <a href="%s">View recipe</a>', 'meal-planner' ), esc_url( get_permalink( $post_ID ) ) ),
-			2 => __( 'Custom field updated.', 'meal-planner' ),
-			3 => __( 'Custom field deleted.', 'meal-planner' ),
-			4 => __( 'Recipe updated.', 'meal-planner' ),
+		$post             = get_post();
+		$post_type        = get_post_type( $post );
+		$post_type_object = get_post_type_object( $post_type );
+
+		$messages = array(
+			0  => '', // Unused. Messages start at index 1.
+			1  => __( 'Recipe updated.', 'meal-planner' ),
+			2  => __( 'Custom field updated.', 'meal-planner' ),
+			3  => __( 'Custom field deleted.', 'meal-planner' ),
+			4  => __( 'Recipe updated.', 'meal-planner' ),
 			/* translators: %s: date and time of the revision */
-			5 => isset( $_GET['revision'] ) ? sprintf( __( 'Recipe restored to revision from %s', 'meal-planner' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-			6 => sprintf( __( 'Recipe published. <a href="%s">View recipe</a>', 'meal-planner' ), esc_url( get_permalink( $post_ID ) ) ),
-			7 => __( 'Recipe saved.', 'meal-planner' ),
-			8 => sprintf( __( 'Recipe submitted. <a target="_blank" href="%s">Preview recipe</a>', 'meal-planner' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-			9 => sprintf( __( 'Recipe scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview recipe</a>', 'meal-planner' ),
-				// translators: Publish box date format, see http://php.net/date
-				date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-			10 => sprintf( __( 'Recipe draft updated. <a target="_blank" href="%s">Preview recipe</a>', 'meal-planner' ), esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Recipe restored to revision from %s', 'meal-planner' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			6  => __( 'Recipe published.', 'meal-planner' ),
+			7  => __( 'Recipe saved.', 'meal-planner' ),
+			8  => __( 'Recipe submitted.', 'meal-planner' ),
+			9  => sprintf(
+				__( 'Recipe scheduled for: <strong>%1$s</strong>.', 'meal-planner' ),
+				/* translators: Publish box date format, see http://php.net/date */
+				date_i18n( __( 'M j, Y @ G:i', 'meal-planner' ), strtotime( $post->post_date ) )
+			),
+			10 => __( 'Recipe draft updated.', 'meal-planner' ),
 		);
+
+		if ( $post_type_object->publicly_queryable ) {
+			$permalink         = get_permalink( $post->ID );
+			$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
+
+			$view_link    = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), __( 'View recipe', 'meal-planner' ) );
+			$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview Recipe', 'meal-planner' ) );
+
+			$messages[1]  .= $view_link;
+			$messages[6]  .= $view_link;
+			$messages[9]  .= $view_link;
+			$messages[8]  .= $preview_link;
+			$messages[10] .= $preview_link;
+		}
+
+		return $messages;
 	}
 }
