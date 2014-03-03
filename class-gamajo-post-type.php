@@ -41,6 +41,9 @@ abstract class Gamajo_Post_Type implements Gamajo_Registerable {
 	 * @since 1.0.0
 	 */
 	public function register() {
+		if ( ! $this->args ) {
+			$this->set_args();
+		}
 		register_post_type( $this->post_type, $this->args );
 	}
 
