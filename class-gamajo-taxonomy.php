@@ -7,7 +7,7 @@
  * @link      http://gamajo.com/registerable
  * @copyright 2013 Gary Jones
  * @license   GPL-2.0+
- * @version   1.0.0
+ * @version   1.0.1
  */
 
 /**
@@ -48,6 +48,9 @@ abstract class Gamajo_Taxonomy implements Gamajo_Registerable {
 	 * @param  array|string $object_type Optional. Name of the object type. Default is null.
 	 */
 	public function register( $object_type = null ) {
+		if ( ! $this->args ) {
+			$this->set_args();
+		}
 		register_taxonomy( $this->taxonomy, $object_type, $this->args );
 	}
 
