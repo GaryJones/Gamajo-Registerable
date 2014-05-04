@@ -25,7 +25,6 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 	 */
 	protected $post_type = 'mp_recipe';
 
-
 	/**
 	 * Return post type default arguments.
 	 *
@@ -46,7 +45,7 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 			'view_item'          => __( 'View Recipe', 'meal-planner' ),
 			'all_items'          => __( 'All Recipes', 'meal-planner' ),
 			'search_items'       => __( 'Search Recipes', 'meal-planner' ),
-			'parent_item_colon'  => __( 'Parent Recipes:', 'meal-planner' ),
+			'parent_item_colon'  => __( 'Parent Recipe:', 'meal-planner' ),
 			'not_found'          => __( 'No recipes found.', 'meal-planner' ),
 			'not_found_in_trash' => __( 'No recipes found in Trash.', 'meal-planner' ),
 		);
@@ -107,7 +106,7 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 			$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
 
 			$view_link    = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), __( 'View recipe', 'meal-planner' ) );
-			$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview Recipe', 'meal-planner' ) );
+			$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview recipe', 'meal-planner' ) );
 
 			$messages[1]  .= $view_link;
 			$messages[6]  .= $view_link;
