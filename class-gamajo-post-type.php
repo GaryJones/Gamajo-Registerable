@@ -113,4 +113,53 @@ abstract class Gamajo_Post_Type implements Gamajo_Registerable {
 	 * @return array Post type default arguments.
 	 */
 	abstract protected function default_args();
+
+	/**
+	 * Get the revision ID from the querystring.
+	 *
+	 * Validates as a positive integer. Used for message 5, when restoring
+	 * from a previous revision.
+	 *
+	 * @since
+	 *
+	 * @return int|bool Positive integer if valid, false otherwise.
+	 */
+	protected function get_revision_input() {
+		return filter_input( INPUT_GET, 'revision', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
+	}
+
+	/**
+	 * Add view or preview links to the end of specific messages.
+	 *
+	 * Only applies if post type is publicly queryable.
+	 *
+	 * @since
+	 *
+	 * @param array   $messages Existing plain text post type messages.
+	 * @param WP_Post $post     Post object.
+	 *
+	 * @return array Post type messages, maybe with appended links.
+	 */
+	protected function maybe_add_message_links( array $messages, $post ) {
+		$post_type        = get_post_type( $post );
+		$post_type_object = get_post_type_object( $post_type );
+
+		if ( ! $post_type_object->publicly_queryable || ! isset( $messages['view'], $messages['preview'] ) ) {
+			return $messages;
+		}
+
+		$permalink         = get_permalink( $post->ID );
+		$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
+
+		$view_link    = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), $messages['view'] );
+		$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), $messages['preview'] );
+
+		$messages[1]  .= $view_link;
+		$messages[6]  .= $view_link;
+		$messages[9]  .= $view_link;
+		$messages[8]  .= $preview_link;
+		$messages[10] .= $preview_link;
+
+		return $messages;
+	}
 }

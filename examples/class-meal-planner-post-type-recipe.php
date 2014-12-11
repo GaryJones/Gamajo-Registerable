@@ -7,6 +7,7 @@
  * @link      http://gamajo.com/meal-planner
  * @copyright 2013 Gary Jones
  * @license   GPL-2.0+
+ * @version   1.0.1
  */
 
 /**
@@ -78,11 +79,9 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 	 * @return array Post type updated messages.
 	 */
 	public function messages() {
-		$post             = get_post();
-		$post_type        = get_post_type( $post );
-		$post_type_object = get_post_type_object( $post_type );
+		$post = get_post();
 
-		$revision = filter_input( INPUT_GET, 'revision', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
+		$revision = $this->get_revision_input();
 
 		$messages = array(
 			0  => '', // Unused. Messages start at index 1.
@@ -101,21 +100,11 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 				date_i18n( __( 'M j, Y @ G:i', 'meal-planner' ), strtotime( $post->post_date ) )
 			),
 			10 => __( 'Recipe draft updated.', 'meal-planner' ),
+			'view'    => __( 'View recipe', 'meal-planner' ),
+			'preview' => __( 'Preview recipe', 'meal-planner' ),
 		);
 
-		if ( $post_type_object->publicly_queryable ) {
-			$permalink         = get_permalink( $post->ID );
-			$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
-
-			$view_link    = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), __( 'View recipe', 'meal-planner' ) );
-			$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview recipe', 'meal-planner' ) );
-
-			$messages[1]  .= $view_link;
-			$messages[6]  .= $view_link;
-			$messages[9]  .= $view_link;
-			$messages[8]  .= $preview_link;
-			$messages[10] .= $preview_link;
-		}
+		$messages = $this->maybe_add_message_links( $messages, $post );
 
 		return $messages;
 	}
