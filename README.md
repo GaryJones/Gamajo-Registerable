@@ -1,5 +1,7 @@
 # Gamajo_Registerable
 
+[![Code Climate](https://codeclimate.com/github/GaryJones/Gamajo-Registerable/badges/gpa.svg)](https://codeclimate.com/github/GaryJones/Gamajo-Registerable)
+
 Register WordPress post types and taxonomies using object-orientated design.
 
 ## Description
