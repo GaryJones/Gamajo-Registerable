@@ -82,6 +82,8 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 		$post_type        = get_post_type( $post );
 		$post_type_object = get_post_type_object( $post_type );
 
+		$revision = filter_input( INPUT_GET, 'revision', FILTER_VALIDATE_INT, array( 'options' => array( 'min_range' => 1 ) ) );
+
 		$messages = array(
 			0  => '', // Unused. Messages start at index 1.
 			1  => __( 'Recipe updated.', 'meal-planner' ),
@@ -89,7 +91,7 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 			3  => __( 'Custom field deleted.', 'meal-planner' ),
 			4  => __( 'Recipe updated.', 'meal-planner' ),
 			/* translators: %s: date and time of the revision */
-			5  => isset( $_GET['revision'] ) ? sprintf( __( 'Recipe restored to revision from %s', 'meal-planner' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+			5  => $revision ? sprintf( __( 'Recipe restored to revision from %s', 'meal-planner' ), wp_post_revision_title( $revision, false ) ) : false,
 			6  => __( 'Recipe published.', 'meal-planner' ),
 			7  => __( 'Recipe saved.', 'meal-planner' ),
 			8  => __( 'Recipe submitted.', 'meal-planner' ),
