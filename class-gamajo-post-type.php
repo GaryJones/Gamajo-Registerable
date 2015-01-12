@@ -148,7 +148,12 @@ abstract class Gamajo_Post_Type implements Gamajo_Registerable {
 			return $messages;
 		}
 
-		$permalink         = get_permalink( $post->ID );
+		$permalink = get_permalink( $post->ID );
+		// get_permalink() can return false.
+		if ( ! $permalink ) {
+			return $messages;
+		}
+
 		$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
 
 		$view_link    = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), $messages['view'] );
