@@ -50,6 +50,8 @@ class Meal_Planner_Taxonomy_Recipe_Type extends Gamajo_Taxonomy {
 			'add_or_remove_items'        => __( 'Add or remove recipe types', 'meal-planner' ),
 			'choose_from_most_used'      => __( 'Choose from the most used recipe types', 'meal-planner' ),
 			'not_found'                  => __( 'No recipe types found.', 'meal-planner' ),
+			'items_list_navigation'      => __( 'Recipe types list navigation', 'meal-planner' ),
+			'items_list'                 => __( 'Recipe types list', 'meal-planner' ),
 		);
 
 		$args = array(

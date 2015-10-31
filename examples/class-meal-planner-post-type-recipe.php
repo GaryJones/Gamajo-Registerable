@@ -35,20 +35,23 @@ class Meal_Planner_Post_Type_Recipe extends Gamajo_Post_Type {
 	 */
 	protected function default_args() {
 		$labels = array(
-			'name'               => _x( 'Recipes', 'post type general name', 'meal-planner' ),
-			'singular_name'      => _x( 'Recipe', 'post type singular name', 'meal-planner' ),
-			'menu_name'          => _x( 'Recipes', 'admin menu', 'meal-planner' ),
-			'name_admin_bar'     => _x( 'Recipe', 'add new on admin bar', 'meal-planner' ),
-			'add_new'            => _x( 'Add New', 'mp_recipe', 'meal-planner' ),
-			'add_new_item'       => __( 'Add New Recipe', 'meal-planner' ),
-			'new_item'           => __( 'New Recipe', 'meal-planner' ),
-			'edit_item'          => __( 'Edit Recipe', 'meal-planner' ),
-			'view_item'          => __( 'View Recipe', 'meal-planner' ),
-			'all_items'          => __( 'All Recipes', 'meal-planner' ),
-			'search_items'       => __( 'Search Recipes', 'meal-planner' ),
-			'parent_item_colon'  => __( 'Parent Recipe:', 'meal-planner' ),
-			'not_found'          => __( 'No recipes found.', 'meal-planner' ),
-			'not_found_in_trash' => __( 'No recipes found in Trash.', 'meal-planner' ),
+			'name'                  => _x( 'Recipes', 'post type general name', 'meal-planner' ),
+			'singular_name'         => _x( 'Recipe', 'post type singular name', 'meal-planner' ),
+			'menu_name'             => _x( 'Recipes', 'admin menu', 'meal-planner' ),
+			'name_admin_bar'        => _x( 'Recipe', 'add new on admin bar', 'meal-planner' ),
+			'add_new'               => _x( 'Add New', 'mp_recipe', 'meal-planner' ),
+			'add_new_item'          => __( 'Add New Recipe', 'meal-planner' ),
+			'new_item'              => __( 'New Recipe', 'meal-planner' ),
+			'edit_item'             => __( 'Edit Recipe', 'meal-planner' ),
+			'view_item'             => __( 'View Recipe', 'meal-planner' ),
+			'all_items'             => __( 'All Recipes', 'meal-planner' ),
+			'search_items'          => __( 'Search Recipes', 'meal-planner' ),
+			'parent_item_colon'     => __( 'Parent Recipe:', 'meal-planner' ),
+			'not_found'             => __( 'No recipes found.', 'meal-planner' ),
+			'not_found_in_trash'    => __( 'No recipes found in Trash.', 'meal-planner' ),
+			'filter_items_list'     => __( 'Filter recipes list', 'meal-planner' ),
+			'items_list_navigation' => __( 'Recipes list navigation', 'meal-planner' ),
+			'items_list'            => __( 'Recipes list', 'meal-planner' ),
 		);
 
 		$supports = array(
